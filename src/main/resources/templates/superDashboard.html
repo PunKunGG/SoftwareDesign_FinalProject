@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="th" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+
+<body>
+	<div th:fragment="content" class="container mt-4">
+
+		<div class="row">
+			<!-- โปรไฟล์ผู้ใช้ -->
+			<div class="col-12 col-lg-4 mb-3">
+				<div class="card shadow-sm h-100">
+					<div class="card-body text-center">
+						<h4 class="fw-bold text-archery mb-3">👤 บัญชีผู้ใช้</h4>
+						<p>
+							<strong>ชื่อผู้ใช้:</strong> <span th:text="${user.username}"></span>
+						</p>
+						<p>
+							<strong>Email:</strong> <span th:text="${user.email}"></span>
+						</p>
+						<p>
+							<strong>เบอร์โทร:</strong> <span th:text="${user.phone}"></span>
+						</p>
+						<p>
+							<strong>รหัสนักศึกษา:</strong> <span th:text="${user.studentid}"></span>
+						</p>
+						<p>
+							<strong>สิทธิ์:</strong> <span class="badge bg-danger"
+								th:text="${role}"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- เมนูการจัดการ -->
+			<div class="col-12 col-lg-8 mb-3">
+				<div class="card shadow-sm h-100">
+					<div class="card-body">
+						<h4 class="fw-bold text-archery mb-3">เมนูจัดการ</h4>
+						<div class="list-group">
+							<a th:href="@{/super/users}"
+								class="list-group-item list-group-item-action"> 👥
+								จัดการผู้ใช้งาน </a> <a th:href="@{/admin/announcements}"
+								class="list-group-item list-group-item-action"> 📢
+								จัดการประกาศ </a> <a th:href="@{/loans}"
+								class="list-group-item list-group-item-action"> 📦
+								ประวัติการยืมอุปกรณ์ </a> <a th:href="@{/practice}"
+								class="list-group-item list-group-item-action"> 🎯
+								บันทึกคะแนนซ้อม </a> <a th:href="@{/equipment/new}"
+								class="list-group-item list-group-item-action">➕
+								เพิ่มอุปกรณ์ใหม่</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ส่วนแสดงอุปกรณ์ที่ยืมอยู่ -->
+		<div class="card shadow-sm mt-4">
+			<div class="card-body">
+				<h4 class="fw-bold text-archery mb-3">📦 อุปกรณ์ที่ยังไม่คืน</h4>
+				<ul class="list-group" th:if="${!#lists.isEmpty(activeLoans)}">
+					<li class="list-group-item" th:each="loan : ${activeLoans}"><span
+						th:text="${loan.equipment.name}"></span> (ยืมโดย <span
+						th:text="${loan.user.username}"></span>)</li>
+				</ul>
+				<p class="text-muted" th:if="${#lists.isEmpty(activeLoans)}">ไม่มีอุปกรณ์ที่ยืมอยู่</p>
+			</div>
+		</div>
+
+		<!-- ประกาศล่าสุด -->
+		<div class="card shadow-sm mt-4">
+			<div class="card-body">
+				<h4 class="fw-bold text-archery mb-3">📢 ประกาศล่าสุด</h4>
+				<ul class="list-group" th:if="${!#lists.isEmpty(announcements)}">
+					<li class="list-group-item" th:each="a : ${announcements}">
+						<h6 th:text="${a.title}"></h6>
+						<p class="mb-1 text-muted" th:text="${a.summary}"></p> <small
+						th:text="${#temporals.format(a.publishedAt, 'dd/MM/yyyy HH:mm')}"></small>
+					</li>
+				</ul>
+				<p class="text-muted" th:if="${#lists.isEmpty(announcements)}">ยังไม่มีประกาศ</p>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

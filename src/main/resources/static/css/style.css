@@ -1,0 +1,195 @@
+html, body.page-landing {
+	width: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	font-family: 'Sarabun', sans-serif;
+}
+
+/* ทำให้ #app เป็น Flex Container และสูงเต็มหน้าจอ */
+#app {
+	display: flex;
+	flex-direction: column; /* จัดเรียง item (header, main) ในแนวตั้ง */
+	min-height: 100vh; /* ให้ #app สูงเต็มหน้าจอเป็นอย่างน้อย */
+}
+
+/* 2. สร้าง Background Image และ Dark Overlay */
+.bg-main {
+	position: relative; /* ใช้เป็นตัวอ้างอิงตำแหน่งของ ::before */
+	min-height: 100vh; /* ความสูงเต็มหน้าจอ */
+	/* สำคัญ: เปลี่ยน 'path/to/your-background-image.jpg' 
+              เป็น URL หรือ path ของรูปภาพพื้นหลังของคุณ
+            */
+	background-color: #FFD7A9; /* สีพื้นหลัง */
+	background-attachment: fixed; /* ทำให้พื้นหลังอยู่กับที่เวลา scroll */
+	color: #A73B24; /* กำหนดสีตัวอักษรหลักเป็นสีขาว */
+}
+
+/* โลโก้หน้า Login */
+.login-logo {
+	display: block;
+	margin: 0 auto 80px auto; /* จัดกลาง + เพิ่มช่องว่างด้านล่าง */
+	max-width: 200px; /* จำกัดขนาดสูงสุด */
+	height: auto; /* ปรับตามสัดส่วน */
+}
+
+.welcome-text {
+    font-size: 2rem;         /* ขยายขนาด font */
+    font-weight: bold;       /* ตัวหนา */
+    color: #5c2e0c;          /* สีน้ำตาลเข้มให้ contrast กับพื้น */
+    margin-top: 15px;        /* เพิ่มระยะห่างจากโลโก้ */
+    margin-bottom: 10px;     /* เว้นก่อน Login */
+}
+
+
+/* ทำให้ Content (logo, text, buttons) ลอยอยู่เหนือ Overlay */
+.bg-main>* {
+	position: relative;
+	z-index: 2;
+}
+
+/* 3. ตกแต่งปุ่ม Register สีพิเศษ */
+.btn-register {
+	background-color: #8B4513; /* สีน้ำตาลอิฐ */
+	border-color: #8B4513;
+	color: #fff;
+	font-weight: bold;
+}
+
+/* เพิ่มเอฟเฟกต์เมื่อเอาเมาส์ไปชี้ */
+.btn-register:hover {
+	background-color: #A0522D;
+	border-color: #A0522D;
+	color: #fff;
+}
+
+.btn-login {
+	background-color: #8B4513;
+	border-color: #8B4513;
+	color: #fff;
+	font-weight: bold;
+}
+
+.btn-login:hover {
+	background-color: #A0522D;
+	border-color: #A0522D;
+	color: #fff;
+}
+
+/* กำหนดตัวแปรสีหลัก (ทางเลือก แต่แนะนำ) */
+:root {
+	--archery-brown: #8B4513; /* สีน้ำตาลเข้มจากโลโก้ */
+}
+
+/* กำหนดสีพื้นหลังให้กับ Navbar */
+.bg-archery-brown {
+	background-color: var(--archery-brown) !important;
+}
+
+/* ปรับสไตล์ไอคอนโปรไฟล์ให้ใหญ่ขึ้น */
+.profile-icon {
+	font-size: 1.5rem; /* 1.5 เท่าของขนาดตัวอักษรปกติ */
+}
+
+/* ทำให้ Banner ไม่มีช่องว่างที่ไม่ต้องการ */
+.banner-container {
+	line-height: 0;
+}
+
+.card-header.dashboard-header {
+	color: #8B4513;
+}
+
+.container-user {
+	background-color: #EFECEC;
+	font-weight: bold;
+	font-size: medium;
+}
+
+.h-position {
+	font-size: medium;
+}
+
+.megaphone-icon {
+	height: 75px;
+}
+/* ---- Add Announcement Button Styles ---- */
+.btn-add-announcement {
+	width: 45px; /* กำหนดความกว้าง */
+	height: 45px;
+	/* กำหนดความสูงให้เท่ากับความกว้าง (เป็นสี่เหลี่ยมจัตุรัส) */
+	background-color: #f7a04f; /* สีพื้นหลังของปุ่ม (ส้มๆ เหมือนในรูป) */
+	color: white; /* สีของ Icon */
+	border-radius: 0.5rem; /* ทำให้ขอบมน */
+	display: flex; /* ใช้ Flexbox เพื่อจัด Icon ให้อยู่กลาง */
+	justify-content: center; /* จัดกลางแนวนอน */
+	align-items: center; /* จัดกลางแนวตั้ง */
+	font-size: 1.5rem; /* ขนาดของ Icon */
+	border: none; /* ไม่มีขอบ */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+	transition: all 0.2s ease-in-out; /* เพิ่ม Animation ตอน hover */
+}
+
+.btn-add-announcement:hover {
+	background-color: #e08b3e; /* สีเข้มขึ้นเมื่อเมาส์ไปชี้ */
+	transform: translateY(-2px); /* ปุ่มขยับขึ้นเล็กน้อย */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* เงาเข้มขึ้น */
+}
+
+/* ทำให้ Label ของ input file มี cursor เป็นรูปมือ */
+#image-upload+label {
+	cursor: pointer;
+}
+
+.announcement-text {
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* แสดง 3 บรรทัดแรก */
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.announcement-text.expanded {
+	-webkit-line-clamp: unset; /* เอาข้อจำกัดออก */
+}
+
+.btn-add-equip {
+	width: 45px; /* กำหนดความกว้าง */
+	height: 45px;
+	/* กำหนดความสูงให้เท่ากับความกว้าง (เป็นสี่เหลี่ยมจัตุรัส) */
+	background-color: #f7a04f; /* สีพื้นหลังของปุ่ม (ส้มๆ เหมือนในรูป) */
+	color: white; /* สีของ Icon */
+	border-radius: 0.5rem; /* ทำให้ขอบมน */
+	display: flex; /* ใช้ Flexbox เพื่อจัด Icon ให้อยู่กลาง */
+	justify-content: center; /* จัดกลางแนวนอน */
+	align-items: center; /* จัดกลางแนวตั้ง */
+	font-size: 1.5rem; /* ขนาดของ Icon */
+	border: none; /* ไม่มีขอบ */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+	transition: all 0.2s ease-in-out; /* เพิ่ม Animation ตอน hover */
+}
+
+.btn-add-equip:hover {
+	background-color: #e08b3e; /* สีเข้มขึ้นเมื่อเมาส์ไปชี้ */
+	transform: translateY(-2px); /* ปุ่มขยับขึ้นเล็กน้อย */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* เงาเข้มขึ้น */
+}
+
+/* ปุ่มยืนยันเก็บคะแนน */
+.btn-confirm {
+	background-color: #8B4513; /* น้ำตาลเข้ม */
+	border: 2px solid #5c2e0c; /* เส้นขอบเข้ม */
+	color: #fff;
+	font-weight: bold;
+	border-radius: 0.5rem;
+	padding: 10px 18px;
+	transition: all 0.2s ease-in-out;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* ใส่เงาเล็กน้อย */
+}
+
+.btn-confirm:hover {
+	background-color: #A0522D; /* น้ำตาลอ่อนกว่า */
+	border-color: #6b3520;
+	transform: scale(1.03); /* hover ขยายเล็กน้อย */
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="th" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+
+<body>
+	<div th:fragment="content" class="container mt-4">
+
+		<div class="card shadow-sm p-4">
+			<h2 class="fw-bold text-archery mb-3">การจัดการการยืมอุปกรณ์</h2>
+
+			<div class="table-responsive">
+				<table class="table table-hover align-middle">
+					<thead class="table-light">
+						<tr>
+							<th scope="col">อุปกรณ์</th>
+							<th scope="col">ผู้ยืม</th>
+							<th scope="col">จำนวน</th>
+							<th scope="col">วันที่ยืม</th>
+							<th scope="col">กำหนดคืน</th>
+							<th scope="col">สถานะ</th>
+							<th scope="col">การจัดการ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="l : ${loans}">
+							<td th:text="${l.equipment.name}">ธนู</td>
+							<td th:text="${l.user.username}">ผู้ใช้</td>
+							<td th:text="${l.quantity}">1</td>
+							<td
+								th:text="${#temporals.format(l.borrowedAt,'dd/MM/yyyy HH:mm')}"></td>
+							<td
+								th:text="${l.returnedAt != null ? #temporals.format(l.returnedAt,'dd/MM/yyyy HH:mm') : '-'}"></td>
+							<td><span th:if="${l.returnedAt == null}"
+								class="badge bg-warning text-dark">กำลังยืม</span> <span
+								th:if="${l.returnedAt != null}" class="badge bg-success">คืนแล้ว</span>
+							</td>
+							<td><form th:if="${l.returnedAt == null}"
+									th:action="@{|/loans/return/${l.id}|}" method="post"
+									class="d-inline">
+									<button type="submit" class="btn btn-sm btn-primary">
+										ทำเครื่องหมายว่าคืนแล้ว</button>
+								</form></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

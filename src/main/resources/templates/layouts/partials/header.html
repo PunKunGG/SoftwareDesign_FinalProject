@@ -1,0 +1,140 @@
+<div th:fragment="header">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-archery-brown">
+		<div class="container-fluid">
+			<a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+				<img th:src="@{/img/LOGO KK AC 3.png}" alt="Logo" height="40"
+				class="d-inline-block align-text-top me-2"> KKU Archery Club
+			</a>
+
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<!-- Left Side -->
+				<ul class="navbar-nav me-auto"></ul>
+
+				<!-- Right Side -->
+				<ul class="navbar-nav ms-auto">
+					<!-- ถ้ายังไม่ login -->
+					<li th:if="${not #authorization.expression('isAuthenticated()')}"
+						class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a>
+					</li>
+					<li th:if="${not #authorization.expression('isAuthenticated()')}"
+						class="nav-item"><a class="nav-link" th:href="@{/register}">Register</a>
+					</li>
+
+					<!-- ถ้า login แล้ว -->
+					<li th:if="${#authorization.expression('isAuthenticated()')}"
+						class="nav-item dropdown"><a id="navbarDropdown"
+						class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+						href="#" role="button" data-bs-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> <i
+							class="fa-regular fa-user"></i> <span
+							th:text="${#authentication.name}">Username</span>
+					</a>
+
+						<ul class="dropdown-menu dropdown-menu-end shadow">
+
+							<!-- สำหรับ MEMBER -->
+							<li
+								th:if="${#authorization.expression('hasAuthority(''ROLE_MEMBER'')')}">
+								<a class="dropdown-item" th:href="@{/loans/my}">📋
+									อุปกรณ์ที่ฉันยืม</a>
+							</li>
+
+							<li
+								th:if="${#authorization.expression('hasAuthority(''ROLE_MEMBER'')')}">
+								<a class="dropdown-item" th:href="@{/practice}">🎯
+									บันทึกคะแนนซ้อม</a>
+							</li>
+
+							<!-- สำหรับ ADMIN / SUPER_ADMIN -->
+							<li
+								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_SUPER_ADMIN'')')}">
+								<a class="dropdown-item" th:href="@{/loans/all}">📋
+									ประวัติการยืมทั้งหมด</a>
+							</li>
+
+							<li
+								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_SUPER_ADMIN'')')}">
+								<a class="dropdown-item" th:href="@{/equipment/new}">➕
+									เพิ่มอุปกรณ์</a>
+							</li>
+
+							<li><a class="dropdown-item" th:href="@{/equipment}">🎯
+									ยืม–คืน อุปกรณ์</a></li>
+
+							<!-- สำหรับ MEMBER และ ADMIN -->
+							<li
+								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_MEMBER'',''ROLE_ADMIN'')')}">
+								<a class="dropdown-item" th:href="@{/practice}">🎯
+									บันทึกคะแนนซ้อม</a>
+							</li>
+
+
+
+							<!-- สำหรับ MEMBER -->
+							<li
+								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_SUPER_ADMIN'')')}">
+								<a class="dropdown-item" th:href="@{/practice/list}">📜
+									ประวัติการซ้อม</a>
+							</li>
+
+							<li
+								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_MEMBER'')')}">
+								<a class="dropdown-item" th:href="@{/practice/list}">📜
+									ประวัติการซ้อม</a>
+							</li>
+
+
+							<li
+								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'')')}">
+								<a class="dropdown-item" th:href="@{/admin/announcements}">📜
+									📢 จัดการประกาศ</a>
+							</li>
+
+							<li
+								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_MEMBER'', ''ROLE_ADMIN'')')}">
+								<a class="dropdown-item" th:href="@{/dashboard}">📊
+									Dashboard</a>
+							</li>
+
+							<!-- สำหรับ ADMIN / SUPER_ADMIN -->
+							<li
+								th:if="${#authorization.expression('hasAuthority(''ROLE_SUPER_ADMIN'')')}">
+								<a class="dropdown-item" th:href="@{/practice}">🎯
+									บันทึกคะแนนซ้อม</a>
+							</li>
+
+
+
+							<li
+								th:if="${#authorization.expression('hasAuthority(''ROLE_SUPER_ADMIN'')')}">
+								<a class="dropdown-item" th:href="@{/super}">📊 Dashboard</a>
+							</li>
+
+
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<form th:action="@{/logout}" method="post" class="px-2 m-0">
+									<input type="hidden" th:name="${_csrf.parameterName}"
+										th:value="${_csrf.token}">
+									<button type="submit" class="dropdown-item text-danger">🚪
+										Logout</button>
+								</form>
+							</li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="banner-container">
+		<img th:src="@{/img/head.png}" class="img-fluid w-100"
+			alt="KKU Archery Club Banner">
+	</div>
+</div>

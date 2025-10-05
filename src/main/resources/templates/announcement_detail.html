@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="th" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+<body>
+	<div th:fragment="content" class="container mt-4">
+
+		<div class="card shadow-sm border-0">
+			<!-- รูปด้านบน -->
+			<img th:if="${announcement.imageUrl}"
+				th:src="${announcement.imageUrl}" class="card-img-top rounded-top"
+				alt="ประกาศ" style="max-height: 300px; object-fit: cover;">
+
+			<div class="card-body p-4">
+				<!-- หัวข้อ -->
+				<h2 class="fw-bold text-archery mb-2"
+					th:text="${announcement.title}">หัวข้อประกาศ</h2>
+
+				<!-- วันที่ -->
+				<small class="text-muted d-block mb-3"
+					th:text="${#temporals.format(announcement.publishedAt,'dd MMM yyyy HH:mm')}">
+					21 ก.ย. 2025 </small>
+
+				<!-- เนื้อหา -->
+				<p class="announcement-text fs-5 lh-lg"
+					th:text="${announcement.summary}">เนื้อหาประกาศแบบเต็ม…</p>
+
+				<!-- ปุ่มย้อนกลับ -->
+				<div class="mt-4">
+					<!-- ถ้าเป็น MEMBER หรือ ADMIN -->
+					<a class="btn btn-outline-secondary"
+						th:if="${#authorization.expression('hasAnyAuthority(''ROLE_MEMBER'',''ROLE_ADMIN'')')}"
+						th:href="@{/dashboard}">⬅ กลับไป Dashboard</a>
+
+					<!-- ถ้าเป็น SUPER_ADMIN -->
+					<a class="btn btn-outline-secondary"
+						th:if="${#authorization.expression('hasAuthority(''ROLE_SUPER_ADMIN'')')}"
+						th:href="@{/super}">⬅ กลับไป Dashboard</a>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

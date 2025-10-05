@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+<body>
+	<div th:fragment="content" class="container mt-4">
+
+		<div class="card shadow-sm p-4">
+			<h2 class="fw-bold text-archery"
+				th:text="${announcement.id == null ? 'สร้างประกาศใหม่' : 'แก้ไขประกาศ'}">
+				Create Announcement</h2>
+
+			<form th:action="@{/admin/announcements/save}" method="post"
+				enctype="multipart/form-data" class="mt-3">
+
+				<!-- หัวข้อ -->
+				<div class="mb-3">
+					<label class="form-label">หัวข้อ</label> <input type="text"
+						name="title" th:value="${announcement.title}" class="form-control"
+						required>
+				</div>
+
+				<!-- สรุป -->
+				<div class="mb-3">
+					<label class="form-label">สรุปเนื้อหา</label>
+					<textarea name="summary" rows="4" class="form-control"
+						th:text="${announcement.summary}"></textarea>
+				</div>
+
+				<!-- อัปโหลดรูป -->
+				<div class="mb-3">
+					<label class="form-label">อัปโหลดรูป</label> <input type="file"
+						name="file" class="form-control" accept="image/*">
+				</div>
+
+				<button type="submit" class="btn btn-confirm w-100">💾
+					บันทึก</button>
+			</form>
+
+
+			<div class="mt-3">
+				<a th:href="@{/admin/announcements}"
+					class="btn btn-outline-secondary w-100"> ⬅ กลับไปหน้าประกาศ </a>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html}(content=~{::content})}">
+<body>
+	<div th:fragment="content">
+		<div class="container mt-4">
+
+			<div class="card shadow-sm">
+				<div class="card-body">
+					<h3 class="fw-bold mb-1" th:text="${equipment.name}">ชื่ออุปกรณ์</h3>
+
+					<p class="mb-1">
+						สถานะ: <span class="badge"
+							th:classappend="${equipment.status} == 'Available' ? ' bg-success' :
+                                (${equipment.status} == 'Borrowed' ? ' bg-warning text-dark' : ' bg-danger')"
+							th:text="${equipment.status}"> Status </span>
+					</p>
+
+					<p class="mb-3">
+						คงเหลือ: <strong th:text="${equipment.quantity}">0</strong>
+					</p>
+
+					<!-- flash message -->
+					<div th:if="${success}" class="alert alert-success"
+						th:text="${success}"></div>
+					<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+					<!-- ฟอร์มยืม -->
+					<form class="row gy-2 gx-2 align-items-center mb-3"
+						th:action="@{|/equipment/${equipment.id}/borrow|}" method="post">
+						<input type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}" />
+
+						<div class="col-auto">
+							<label class="form-label mb-0">จำนวน</label>
+						</div>
+						<div class="col-auto">
+							<input type="number" name="quantity" class="form-control"
+								value="1" min="1" th:max="${equipment.quantity}">
+						</div>
+						<div class="col-auto">
+							<button type="submit" class="btn btn-confirm"
+								th:disabled="${equipment.quantity == 0}">ยืม</button>
+						</div>
+					</form>
+
+					<!-- ส่วนคืน: แสดงเมื่อมีรายการที่ยังไม่คืนของผู้ใช้สำหรับอุปกรณ์นี้ -->
+					<div th:if="${activeLoan != null}">
+						<div class="mb-2 small text-muted">
+							คุณกำลังยืมอยู่จำนวน <strong th:text="${activeLoan.quantity}">1</strong>
+							ชิ้น (เริ่มยืม: <span
+								th:text="${#temporals.format(activeLoan.borrowedAt,'dd/MM/yyyy HH:mm')}">-</span>)
+						</div>
+
+						<form th:action="@{|/equipment/loans/${activeLoan.id}/return|}"
+							method="post">
+							<input type="hidden" th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}" />
+							<button type="submit" class="btn btn-outline-danger">คืน</button>
+						</form>
+					</div>
+
+					<div th:if="${activeLoan == null}" class="text-muted">
+						ยังไม่มีรายการยืมสำหรับอุปกรณ์ชิ้นนี้</div>
+
+					<div class="mt-3">
+						<a th:href="@{/equipment}" class="btn btn-outline-secondary">ย้อนกลับ</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

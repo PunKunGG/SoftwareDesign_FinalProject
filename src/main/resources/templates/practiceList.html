@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="th" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+<head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<div th:fragment="content" class="container mt-4">
+
+		<!-- 📊 สรุปผล -->
+		<div class="card shadow-sm p-4 mb-4">
+			<h2 class="fw-bold text-archery mb-3">📊 สรุปการซ้อม</h2>
+			<div class="row text-center">
+				<div class="col-md-3">
+					<h4 th:text="${#numbers.formatDecimal(avgScore, 1, 2)}"></h4>
+					<p class="text-muted">คะแนนเฉลี่ย</p>
+				</div>
+				<div class="col-md-3">
+					<h4 th:text="${#numbers.formatDecimal(avgDistance, 1, 2)} + ' ม.'"></h4>
+					<p class="text-muted">ระยะเฉลี่ย</p>
+				</div>
+				<div class="col-md-3">
+					<h4 th:text="${totalArrows}"></h4>
+					<p class="text-muted">ลูกศรทั้งหมด</p>
+				</div>
+				<div class="col-md-3">
+					<h4 th:text="${totalSessions}"></h4>
+					<p class="text-muted">จำนวนครั้งที่ซ้อม</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- ตารางประวัติ -->
+		<div class="card shadow-sm p-4 mb-4">
+			<h2 class="fw-bold text-archery mb-3">📋 ประวัติการซ้อม</h2>
+			<table class="table table-hover mt-3">
+				<thead>
+					<tr>
+						<th>วันที่ซ้อม</th>
+						<th>ประเภทธนู</th>
+						<th>ระยะ</th>
+						<th>จำนวนลูก</th>
+						<th>คะแนน</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="s : ${scores}">
+						<td th:text="${s.createdAt}"></td>
+						<td th:text="${s.bowType}"></td>
+						<td th:text="${s.distance}"></td>
+						<td th:text="${s.arrows}"></td>
+						<td th:text="${s.score}"></td>
+					</tr>
+					<tr th:if="${#lists.isEmpty(scores)}">
+						<td colspan="5" class="text-muted">ยังไม่มีข้อมูลการซ้อม</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+
+<body>
+	<div th:fragment="content">
+		<div class="container mt-4">
+			<div class="row justify-content-center">
+				<div class="col-12 col-lg-8">
+
+					<!-- หัวข้อ -->
+					<div
+						class="card-header display-5 fw-bold dashboard-header ms-2 p-2">
+						Dashboard</div>
+
+					<!-- ข้อมูลผู้ใช้ -->
+					<div class="card shadow-sm p-4 mb-4">
+						<div class="card-body p-4">
+							<h4 class="mb-3">👤 ข้อมูลสมาชิก</h4>
+							<ul class="list-group">
+								<li class="list-group-item"><b>ชื่อผู้ใช้:</b> <span
+									th:text="${user.username}"></span></li>
+								<li class="list-group-item"><b>Email:</b> <span
+									th:text="${user.email}"></span></li>
+								<li class="list-group-item"><b>Phone:</b> <span
+									th:text="${user.phone}"></span></li>
+								<li class="list-group-item"><b>Student ID:</b> <span
+									th:text="${user.studentid}"></span></li>
+								<li class="list-group-item"><b>Role:</b> <span
+									th:text="${role}"></span></li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- อุปกรณ์ที่ยืมอยู่ -->
+					<div class="card shadow-sm p-4 mb-4">
+						<h3 class="fw-bold text-archery">📌 อุปกรณ์ที่คุณยืมอยู่</h3>
+						<table class="table table-hover mt-3">
+							<thead>
+								<tr>
+									<th>ชื่ออุปกรณ์</th>
+									<th>จำนวน</th>
+									<th>วันที่ยืม</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="loan : ${myLoans}">
+									<td th:text="${loan.equipment.name}"></td>
+									<td th:text="${loan.quantity}"></td>
+									<td
+										th:text="${#temporals.format(loan.borrowedAt,'dd/MM/yyyy HH:mm')}"></td>
+								</tr>
+								<tr th:if="${#lists.isEmpty(myLoans)}">
+									<td colspan="3" class="text-muted">ไม่มีอุปกรณ์ที่ยืมอยู่</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- ประกาศล่าสุด -->
+					<div class="card shadow-sm p-4">
+						<h3 class="fw-bold text-archery">📢 ประกาศล่าสุด</h3>
+						<ul class="list-group mt-3">
+							<li class="list-group-item" th:each="a : ${announcements}">
+								<a th:href="@{|/announcements/detail/${a.id}|}" th:text="${a.title}"></a>
+								<small class="text-muted d-block"
+								th:text="${#temporals.format(a.publishedAt,'dd/MM/yyyy HH:mm')}"></small>
+							</li>
+							<li class="list-group-item text-muted"
+								th:if="${#lists.isEmpty(announcements)}">ยังไม่มีประกาศ</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

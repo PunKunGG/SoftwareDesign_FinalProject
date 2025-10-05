@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+<body>
+	<div th:fragment="content" class="container mt-4">
+
+		<div class="card shadow-sm p-4">
+			<h2 class="fw-bold text-archery">จัดการคะแนนซ้อม</h2>
+
+			<!-- ตัวอย่างตาราง -->
+			<table class="table table-striped mt-3">
+				<thead>
+					<tr>
+						<th>วันที่</th>
+						<th>ระยะทาง</th>
+						<th>ประเภทธนู</th>
+						<th>ลูกธนู</th>
+						<th>คะแนน</th>
+						<th>ผู้ใช้</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="ps : ${scores}">
+						<td
+							th:text="${#temporals.format(ps.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+						<td th:text="${ps.distance}"></td>
+						<td th:text="${ps.bowType}"></td>
+						<td th:text="${ps.arrows}"></td>
+						<td th:text="${ps.score}"></td>
+						<td th:text="${ps.user.username}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</body>
+</html>

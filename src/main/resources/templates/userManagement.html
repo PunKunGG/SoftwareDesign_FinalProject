@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="th" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+
+<body>
+	<div th:fragment="content" class="container mt-4">
+
+		<div class="card shadow-sm p-4">
+			<h2 class="fw-bold text-archery mb-3">จัดการผู้ใช้งาน</h2>
+
+			<div class="table-responsive">
+				<table class="table table-striped align-middle">
+					<thead class="table-light">
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">ชื่อผู้ใช้</th>
+							<th scope="col">อีเมล</th>
+							<th scope="col">สิทธิ์</th>
+							<th scope="col">การจัดการ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="u : ${users}">
+							<td th:text="${u.id}"></td>
+							<td th:text="${u.username}"></td>
+							<td th:text="${u.email}"></td>
+							<td><span th:text="${u.role}"
+								th:classappend="${u.role.name() == 'SUPER_ADMIN' ? 'badge bg-danger' 
+                                  : (u.role.name() == 'ADMIN' ? 'badge bg-primary' : 'badge bg-secondary')}">
+							</span></td>
+							<td>
+								<form th:action="@{'/super/users/' + ${u.id} + '/role'}"
+									method="post" class="d-flex gap-2">
+									<select name="role" class="form-select form-select-sm">
+										<option value="MEMBER"
+											th:selected="${u.role.name() == 'MEMBER'}">MEMBER</option>
+										<option value="ADMIN"
+											th:selected="${u.role.name() == 'ADMIN'}">ADMIN</option>
+										<option value="SUPER_ADMIN"
+											th:selected="${u.role.name() == 'SUPER_ADMIN'}">SUPER_ADMIN</option>
+									</select>
+									<button type="submit" class="btn btn-sm btn-success">บันทึก</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
