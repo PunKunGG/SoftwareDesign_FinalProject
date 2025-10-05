@@ -54,4 +54,10 @@ public class AuthController {
 		}
 		return "forgot-password";
 	}
+
+	// ✅ Redirect root path to /login
+	@GetMapping("/")
+	public String redirectToLogin() {
+		return "redirect:/login";
+	}
 }
