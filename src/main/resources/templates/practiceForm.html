@@ -13,13 +13,24 @@
 
 			<form th:action="@{/practice}" method="post">
 				<div class="mb-3">
-					<label class="form-label">ระยะ (เมตร)</label> <input type="number"
-						name="distance" class="form-control" required>
+					<label class="form-label">ระยะ (เมตร)</label> <select
+						name="distance" class="form-select" required>
+						<option value="" disabled selected>-- เลือกระยะ --</option>
+						<option value="5">5 เมตร</option>
+						<option value="7">7 เมตร</option>
+						<option value="10">10 เมตร</option>
+						<option value="15">15 เมตร</option>
+						<option value="18">18 เมตร</option>
+						<option value="30">30 เมตร</option>
+					</select>
 				</div>
+
 
 				<div class="mb-3">
 					<label class="form-label">ประเภทคันธนู</label> <select
 						name="bowType" class="form-select" required>
+						<option value="" disabled selected>-- เลือกประเภทคันธนู
+							--</option>
 						<option value="Recurve">Recurve</option>
 						<option value="Compound">Compound</option>
 						<option value="Traditional">Traditional</option>
@@ -27,14 +38,19 @@
 				</div>
 
 				<div class="mb-3">
-					<label class="form-label">จำนวนลูกศร</label> <input type="number"
-						name="arrows" class="form-control" required>
+					<label class="form-label">จำนวนลูกศร (ลูก)</label> <select
+						name="arrows" class="form-select" required>
+						<option value="" disabled selected>-- เลือกจำนวน --</option>
+						<option value="5">3 ลูก</option>
+						<option value="7">6 ลูก</option>
+					</select>
 				</div>
 
 				<div class="mb-3">
 					<label class="form-label">คะแนนรวม</label> <input type="number"
-						name="score" class="form-control" required>
+						name="score" class="form-control" required min="0">
 				</div>
+
 
 				<button type="submit" class="btn btn-confirm">บันทึก</button>
 				<a th:href="@{/practice/list}" class="btn btn-outline-secondary">📋

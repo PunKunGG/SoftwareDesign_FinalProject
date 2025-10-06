@@ -7,11 +7,9 @@
 		<div class="card shadow-sm p-4">
 			<h2 class="fw-bold text-archery mb-3">📢 จัดการประกาศ</h2>
 
-			<!-- ปุ่มเพิ่มประกาศ -->
-			<a class="btn btn-confirm mb-3" th:href="@{/admin/announcements/new}">
-				➕ เพิ่มประกาศใหม่ </a>
+			<a class="btn btn-confirm mb-3" th:href="@{/announcements/new}">➕
+				เพิ่มประกาศใหม่</a>
 
-			<!-- ตารางประกาศ -->
 			<div class="table-responsive">
 				<table class="table table-hover align-middle">
 					<thead class="table-light">
@@ -25,19 +23,19 @@
 					<tbody>
 						<tr th:each="a : ${announcements}">
 							<td th:text="${a.title}"></td>
-							<td th:text="${#temporals.format(a.publishedAt,'dd/MM/yyyy')}"></td>
+							<td
+								th:text="${#temporals.format(a.publishedAt, 'dd/MM/yyyy HH:mm')}"></td>
 							<td th:text="${a.author != null ? a.author.username : 'ไม่ระบุ'}"></td>
-							<td class="text-center">
-								<!-- ปุ่มแก้ไข --> <a class="btn btn-sm btn-outline-primary"
-								th:href="@{|/admin/announcements/edit/${a.id}|}"> ✏️ แก้ไข </a>
-								<!-- ปุ่มลบ --> <a class="btn btn-sm btn-outline-danger"
-								th:href="@{|/admin/announcements/delete/${a.id}|}"> 🗑 ลบ </a>
-							</td>
+							<td class="text-center"><a
+								class="btn btn-sm btn-outline-primary"
+								th:href="@{|/announcements/edit/${a.id}|}">✏️ แก้ไข</a> <!-- ปุ่มลบ -->
+								<a class="btn btn-sm btn-outline-danger"
+								th:href="@{|/announcements/delete/${a.id}|}"
+								onclick="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบประกาศนี้?');">
+									🗑 ลบ </a></td>
 						</tr>
-						<!-- กรณีไม่มีประกาศ -->
 						<tr th:if="${#lists.isEmpty(announcements)}">
-							<td colspan="4" class="text-muted text-center">
-								ยังไม่มีประกาศ</td>
+							<td colspan="4" class="text-center text-muted">ยังไม่มีประกาศ</td>
 						</tr>
 					</tbody>
 				</table>

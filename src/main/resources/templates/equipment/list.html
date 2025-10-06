@@ -1,8 +1,25 @@
 <!DOCTYPE html>
 <html lang="th" xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{layouts/new_app :: ~{html} (content = ~{::content})}">
+
 <body>
 	<div th:fragment="content" class="container mt-4">
+
+		<!-- ✅ ส่วนแสดงข้อความแจ้งเตือน -->
+		<div th:if="${error}"
+			class="alert alert-danger alert-dismissible fade show" role="alert">
+			<span th:text="${error}"></span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+
+		<div th:if="${success}"
+			class="alert alert-success alert-dismissible fade show" role="alert">
+			<span th:text="${success}"></span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+		<!-- ✅ จบส่วนแจ้งเตือน -->
 
 		<div class="card shadow-sm p-4">
 			<h2 class="fw-bold text-archery mb-3">รายการอุปกรณ์</h2>
@@ -34,10 +51,10 @@
 						<td th:text="${e.quantity}"></td>
 						<td><span
 							th:classappend="${e.status == 'Available'} ? 'badge bg-success'
-                                            : (e.status == 'Maintenance' ? 'badge bg-warning text-dark' : 'badge bg-danger')"
+								: (e.status == 'Maintenance' ? 'badge bg-warning text-dark' : 'badge bg-danger')"
 							th:text="${e.status}"> </span></td>
 						<td>
-							<!-- MEMBER เห็นเฉพาะปุ่มยืม --> <!-- MEMBER เห็นเฉพาะปุ่มยืม -->
+							<!-- MEMBER เห็นเฉพาะปุ่มยืม -->
 							<div
 								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_MEMBER'',''ROLE_ADMIN'',''ROLE_SUPER_ADMIN'')')}">
 								<form th:action="@{|/loans/borrow/${e.id}|}" method="post"
@@ -48,7 +65,6 @@
 									<button type="submit" class="btn btn-sm btn-success"
 										th:disabled="${e.status != 'Available'}">ยืม</button>
 								</form>
-
 							</div> <!-- ADMIN / SUPER_ADMIN เห็นปุ่มแก้ไข/ลบ -->
 							<div
 								th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_SUPER_ADMIN'')')}">
@@ -64,7 +80,6 @@
 					</tr>
 				</tbody>
 			</table>
-
 		</div>
 
 	</div>

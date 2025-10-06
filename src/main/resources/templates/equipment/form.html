@@ -21,8 +21,13 @@
 
 				<!-- หมวดหมู่ -->
 				<div class="mb-3">
-					<label class="form-label">หมวดหมู่</label> <input type="text"
-						class="form-control" th:field="*{category}">
+					<label class="form-label">หมวดหมู่</label> <select
+						class="form-select" th:field="*{category}" required>
+						<option value="Recurve">Recurve</option>
+						<option value="Compound">Compound</option>
+						<option value="Traditional">Traditional</option>
+						<option value="Sight">Sight</option>
+					</select>
 				</div>
 
 				<!-- จำนวน -->

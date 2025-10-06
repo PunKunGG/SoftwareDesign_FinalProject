@@ -37,7 +37,8 @@
 							<td><form th:if="${l.returnedAt == null}"
 									th:action="@{|/loans/return/${l.id}|}" method="post"
 									class="d-inline">
-									<button type="submit" class="btn btn-sm btn-primary">
+									<button type="submit" class="btn btn-sm btn-primary"
+										onclick="return confirm('ยืนยันว่าคืนอุปกรณ์นี้แล้วใช่หรือไม่?');">
 										ทำเครื่องหมายว่าคืนแล้ว</button>
 								</form></td>
 						</tr>
